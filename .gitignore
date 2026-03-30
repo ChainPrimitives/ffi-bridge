@@ -1,0 +1,31 @@
+# Build artifacts
+rust/target/
+go/vendor/
+
+# Go
+*.test
+*.out
+coverage.txt
+coverage.html
+
+# Rust
+**/*.rs.bk
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Secrets
+.env
+*.pem
+*.key
+
+# Reports
+*.log
