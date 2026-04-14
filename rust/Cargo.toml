@@ -23,6 +23,11 @@ once_cell = "1"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "ffi_bench"
+harness = false
 
 [profile.release]
 opt-level = 3
