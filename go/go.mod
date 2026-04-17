@@ -1,3 +1,3 @@
-module github.com/Subaskar-S/ffi-bridge
+module github.com/ChainPrimitives/ffi-bridge
 
 go 1.21

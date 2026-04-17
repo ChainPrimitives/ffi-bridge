@@ -3,7 +3,7 @@
 > Memory-safe Go↔Rust FFI boundary helpers: buffer management, error propagation, panic safety, and named callback registration.
 
 [![Crates.io](https://img.shields.io/crates/v/ffi-bridge.svg)](https://crates.io/crates/ffi-bridge)
-[![Go Reference](https://pkg.go.dev/badge/github.com/Subaskar-S/ffi-bridge.svg)](https://pkg.go.dev/github.com/Subaskar-S/ffi-bridge)
+[![Go Reference](https://pkg.go.dev/badge/github.com/ChainPrimitives/ffi-bridge.svg)](https://pkg.go.dev/github.com/ChainPrimitives/ffi-bridge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/ChainPrimitives/ffi-bridge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ChainPrimitives/ffi-bridge/pulls)
@@ -30,7 +30,7 @@ FFI between Go and Rust is notoriously error-prone:
 
 ```
 ffi-bridge/
-├── go/                          # Go module (github.com/Subaskar-S/ffi-bridge)
+├── go/                          # Go module (github.com/ChainPrimitives/ffi-bridge)
 │   ├── go.mod
 │   ├── bridge.go                # Buffer type + FromBytes / FromJSON
 │   ├── memory.go                # Low-level alloc helpers, FfiString conversion
@@ -99,7 +99,7 @@ ffi-bridge = "1.0"
 ### 3. Use the Go module
 
 ```bash
-go get github.com/Subaskar-S/ffi-bridge
+go get github.com/ChainPrimitives/ffi-bridge
 ```
 
 > **Note:** CGO_ENABLED=1 is required. The Rust shared library must be built
@@ -186,7 +186,7 @@ pub extern "C" fn my_fn(input: FfiBuffer) -> FfiResult {
 ### Buffer operations
 
 ```go
-import ffibridge "github.com/Subaskar-S/ffi-bridge"
+import ffibridge "github.com/ChainPrimitives/ffi-bridge"
 
 // From bytes
 buf := ffibridge.FromBytes([]byte("hello rust"))

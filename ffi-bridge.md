@@ -11,7 +11,7 @@ A Go↔Rust FFI boundary helper library providing memory-safe data passing, erro
 ## Package Metadata
 
 ```
-Go module:   github.com/Subaskar-S/ffi-bridge
+Go module:   github.com/ChainPrimitives/ffi-bridge
 Rust crate:  ffi-bridge
 License:     MIT
 ```
@@ -250,7 +250,7 @@ The registry is a `Mutex<HashMap<String, CallbackFn>>` guarded by `once_cell::sy
 ### go.mod
 
 ```
-module github.com/Subaskar-S/ffi-bridge
+module github.com/ChainPrimitives/ffi-bridge
 
 go 1.21
 ```

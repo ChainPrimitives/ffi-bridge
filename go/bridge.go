@@ -1,3 +1,6 @@
+//go:build cgo
+// +build cgo
+
 // Package ffibridge provides memory-safe Go↔Rust FFI abstractions.
 //
 // The package links against the Rust ffi-bridge shared library and exposes
