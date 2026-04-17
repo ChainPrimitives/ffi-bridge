@@ -80,6 +80,14 @@ jobs:
       - name: Build Rust library
         run: cd rust && cargo build --release
 
+      - name: Set library path (Linux)
+        if: runner.os == 'Linux'
+        run: echo "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/rust/target/release" >> $GITHUB_ENV
+
+      - name: Set library path (macOS)
+        if: runner.os == 'macOS'
+        run: echo "DYLD_LIBRARY_PATH=$GITHUB_WORKSPACE/rust/target/release" >> $GITHUB_ENV
+
       - name: Go vet
         run: cd go && CGO_ENABLED=1 go vet .
 

@@ -45,8 +45,16 @@ jobs:
       - name: Build Rust lib for Go tests
         run: cd rust && cargo build --release
 
+      - name: Set library path (Linux)
+        if: runner.os == 'Linux'
+        run: echo "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/rust/target/release" >> $GITHUB_ENV
+
+      - name: Set library path (macOS)
+        if: runner.os == 'macOS'
+        run: echo "DYLD_LIBRARY_PATH=$GITHUB_WORKSPACE/rust/target/release" >> $GITHUB_ENV
+
       - name: Go tests
-        run: cd go && CGO_ENABLED=1 go test -v -count=1 ./...
+        run: cd go && CGO_ENABLED=1 go test -v -count=1 .
 
   # ─── Publish Rust crate to crates.io ──────────────────────────────────────
   publish-rust:
