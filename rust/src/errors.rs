@@ -10,7 +10,6 @@
 //! a Rust panic unwinds into C or Go. Every `extern "C"` function in this crate
 //! wraps its body in [`catch_panic`].
 
-
 use crate::memory::{FfiBuffer, FfiString};
 
 // ─── FfiErrorCode ─────────────────────────────────────────────────────────────
@@ -22,16 +21,16 @@ use crate::memory::{FfiBuffer, FfiString};
 #[repr(i32)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FfiErrorCode {
-    Ok             = 0,
-    NullPointer    = 1,
+    Ok = 0,
+    NullPointer = 1,
     BufferTooSmall = 2,
-    InvalidUtf8    = 3,
-    Serialization  = 4,
-    Panic          = 5,
-    Timeout        = 6,
-    NotFound       = 7,
-    LockPoisoned   = 8,
-    Unknown        = 99,
+    InvalidUtf8 = 3,
+    Serialization = 4,
+    Panic = 5,
+    Timeout = 6,
+    NotFound = 7,
+    LockPoisoned = 8,
+    Unknown = 99,
 }
 
 // ─── FfiError ─────────────────────────────────────────────────────────────────
@@ -54,39 +53,32 @@ impl FfiError {
     /// Map to the corresponding [`FfiErrorCode`].
     pub fn code(&self) -> FfiErrorCode {
         match self {
-            Self::NullPointer          => FfiErrorCode::NullPointer,
+            Self::NullPointer => FfiErrorCode::NullPointer,
             Self::BufferTooSmall { .. } => FfiErrorCode::BufferTooSmall,
-            Self::InvalidUtf8(_)       => FfiErrorCode::InvalidUtf8,
-            Self::Serialization(_)     => FfiErrorCode::Serialization,
-            Self::Panic(_)             => FfiErrorCode::Panic,
-            Self::Timeout              => FfiErrorCode::Timeout,
-            Self::NotFound(_)          => FfiErrorCode::NotFound,
-            Self::LockPoisoned         => FfiErrorCode::LockPoisoned,
-            Self::Unknown(_)           => FfiErrorCode::Unknown,
+            Self::InvalidUtf8(_) => FfiErrorCode::InvalidUtf8,
+            Self::Serialization(_) => FfiErrorCode::Serialization,
+            Self::Panic(_) => FfiErrorCode::Panic,
+            Self::Timeout => FfiErrorCode::Timeout,
+            Self::NotFound(_) => FfiErrorCode::NotFound,
+            Self::LockPoisoned => FfiErrorCode::LockPoisoned,
+            Self::Unknown(_) => FfiErrorCode::Unknown,
         }
     }
 
     /// Build a human-readable error message.
     pub fn message(&self) -> String {
         match self {
-            Self::NullPointer =>
-                "null pointer received".into(),
-            Self::BufferTooSmall { needed, available } =>
-                format!("buffer too small: need {needed} bytes, have {available}"),
-            Self::InvalidUtf8(ctx) =>
-                format!("invalid UTF-8 in {ctx}"),
-            Self::Serialization(detail) =>
-                format!("serialization error: {detail}"),
-            Self::Panic(msg) =>
-                format!("panic caught at FFI boundary: {msg}"),
-            Self::Timeout =>
-                "operation timed out".into(),
-            Self::NotFound(name) =>
-                format!("not found: {name}"),
-            Self::LockPoisoned =>
-                "mutex lock is poisoned".into(),
-            Self::Unknown(detail) =>
-                format!("unknown error: {detail}"),
+            Self::NullPointer => "null pointer received".into(),
+            Self::BufferTooSmall { needed, available } => {
+                format!("buffer too small: need {needed} bytes, have {available}")
+            }
+            Self::InvalidUtf8(ctx) => format!("invalid UTF-8 in {ctx}"),
+            Self::Serialization(detail) => format!("serialization error: {detail}"),
+            Self::Panic(msg) => format!("panic caught at FFI boundary: {msg}"),
+            Self::Timeout => "operation timed out".into(),
+            Self::NotFound(name) => format!("not found: {name}"),
+            Self::LockPoisoned => "mutex lock is poisoned".into(),
+            Self::Unknown(detail) => format!("unknown error: {detail}"),
         }
     }
 }
@@ -192,11 +184,7 @@ where
             let msg = panic_payload
                 .downcast_ref::<&str>()
                 .copied()
-                .or_else(|| {
-                    panic_payload
-                        .downcast_ref::<String>()
-                        .map(|s| s.as_str())
-                })
+                .or_else(|| panic_payload.downcast_ref::<String>().map(|s| s.as_str()))
                 .unwrap_or("unknown panic payload");
             FfiResult::err(FfiError::Panic(msg.to_string()))
         }
@@ -237,9 +225,7 @@ mod tests {
 
     #[test]
     fn catch_panic_err_path() {
-        let result = catch_panic(|| {
-            Err::<FfiBuffer, _>(FfiError::Timeout)
-        });
+        let result = catch_panic(|| Err::<FfiBuffer, _>(FfiError::Timeout));
         assert_eq!(result.error_code, FfiErrorCode::Timeout);
         ffi_result_free(result);
     }
@@ -257,7 +243,10 @@ mod tests {
 
     #[test]
     fn ffi_error_buffer_too_small_message() {
-        let e = FfiError::BufferTooSmall { needed: 100, available: 10 };
+        let e = FfiError::BufferTooSmall {
+            needed: 100,
+            available: 10,
+        };
         assert!(e.message().contains("100"));
         assert!(e.message().contains("10"));
     }

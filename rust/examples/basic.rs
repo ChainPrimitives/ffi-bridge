@@ -39,9 +39,7 @@ fn main() {
             "add" => req.a + req.b,
             "mul" => req.a * req.b,
             "sub" => req.a - req.b,
-            unknown => {
-                return FfiResult::err(FfiError::Unknown(format!("unknown op: {unknown}")))
-            }
+            unknown => return FfiResult::err(FfiError::Unknown(format!("unknown op: {unknown}"))),
         };
 
         match FfiBuffer::from_json(&MathResponse { result }) {
@@ -51,10 +49,17 @@ fn main() {
     })
     .expect("callback registration failed");
 
-    println!("✓ Registered callback 'math.add' ({} total)", callback_count());
+    println!(
+        "✓ Registered callback 'math.add' ({} total)",
+        callback_count()
+    );
 
     // ── 2. Build an input buffer ───────────────────────────────────────────────
-    let request = MathRequest { a: 21, b: 21, op: "add".into() };
+    let request = MathRequest {
+        a: 21,
+        b: 21,
+        op: "add".into(),
+    };
     let input = FfiBuffer::from_json(&request).expect("failed to serialize request");
     println!("✓ Serialized request: {{ a: 21, b: 21, op: \"add\" }}");
 
@@ -72,8 +77,8 @@ fn main() {
     }
 
     // ── 4. Decode the response ─────────────────────────────────────────────────
-    let response: MathResponse = unsafe { result.payload.to_json() }
-        .expect("failed to decode response");
+    let response: MathResponse =
+        unsafe { result.payload.to_json() }.expect("failed to decode response");
 
     println!("✓ Result: 21 + 21 = {}", response.result);
     assert_eq!(response.result, 42, "math is broken");
@@ -93,7 +98,10 @@ fn main() {
     // ── 7. Version check ──────────────────────────────────────────────────────
     let ver_buf = ffi_bridge::ffi_version();
     let ver = unsafe { ver_buf.as_slice() };
-    println!("✓ ffi-bridge version: {}", std::str::from_utf8(ver).unwrap());
+    println!(
+        "✓ ffi-bridge version: {}",
+        std::str::from_utf8(ver).unwrap()
+    );
     ffi_buffer_free(ver_buf);
 
     println!("=========================================");

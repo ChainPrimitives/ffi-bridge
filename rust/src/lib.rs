@@ -25,7 +25,12 @@ pub mod memory;
 pub mod types;
 
 pub use bridge::*;
-pub use callback::{callback_count, ffi_callback_count, ffi_invoke_callback, ffi_register_callback, ffi_unregister_callback, register_callback, unregister_callback};
+pub use callback::{
+    callback_count, ffi_callback_count, ffi_invoke_callback, ffi_register_callback,
+    ffi_unregister_callback, register_callback, unregister_callback,
+};
 pub use errors::{catch_panic, ffi_result_free, FfiError, FfiErrorCode, FfiResult};
-pub use memory::{ffi_buffer_alloc, ffi_buffer_free, ffi_string_alloc, ffi_string_free, FfiBuffer, FfiString};
+pub use memory::{
+    ffi_buffer_alloc, ffi_buffer_free, ffi_string_alloc, ffi_string_free, FfiBuffer, FfiString,
+};
 pub use types::*;

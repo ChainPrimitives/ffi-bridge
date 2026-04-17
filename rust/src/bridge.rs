@@ -118,14 +118,16 @@ mod tests {
     #[test]
     fn bridge_call_run_json() {
         #[derive(serde::Serialize, serde::Deserialize)]
-        struct Req { n: u32 }
+        struct Req {
+            n: u32,
+        }
         #[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
-        struct Res { doubled: u32 }
+        struct Res {
+            doubled: u32,
+        }
 
         let input = FfiBuffer::from_json(&Req { n: 21 }).unwrap();
-        let result = BridgeCall::new(input).run_json(|req: Req| {
-            Ok(Res { doubled: req.n * 2 })
-        });
+        let result = BridgeCall::new(input).run_json(|req: Req| Ok(Res { doubled: req.n * 2 }));
         assert!(result.is_ok());
         let decoded: Res = unsafe { result.payload.to_json() }.unwrap();
         assert_eq!(decoded, Res { doubled: 42 });

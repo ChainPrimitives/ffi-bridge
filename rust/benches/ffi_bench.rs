@@ -52,7 +52,11 @@ struct BenchPayload {
 fn bench_json_round_trip(c: &mut Criterion) {
     let mut group = c.benchmark_group("json_round_trip");
 
-    let small = BenchPayload { id: 1, name: "small".into(), values: vec![1, 2, 3] };
+    let small = BenchPayload {
+        id: 1,
+        name: "small".into(),
+        values: vec![1, 2, 3],
+    };
     let large = BenchPayload {
         id: 999,
         name: "large_payload_with_longer_name".into(),

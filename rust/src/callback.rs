@@ -107,10 +107,7 @@ pub unsafe extern "C" fn ffi_register_callback(
 ///
 /// `name` must be a valid null-terminated C string.
 #[no_mangle]
-pub unsafe extern "C" fn ffi_invoke_callback(
-    name: *const c_char,
-    input: FfiBuffer,
-) -> FfiResult {
+pub unsafe extern "C" fn ffi_invoke_callback(name: *const c_char, input: FfiBuffer) -> FfiResult {
     // We must resolve the name before entering catch_panic (CStr isn't UnwindSafe).
     let name_str = match cstr_to_string(name) {
         Ok(s) => s,
@@ -118,9 +115,7 @@ pub unsafe extern "C" fn ffi_invoke_callback(
     };
 
     catch_panic(move || {
-        let guard = CALLBACKS
-            .lock()
-            .map_err(|_| FfiError::LockPoisoned)?;
+        let guard = CALLBACKS.lock().map_err(|_| FfiError::LockPoisoned)?;
 
         let cb = guard
             .get(&name_str)
@@ -160,7 +155,11 @@ pub unsafe extern "C" fn ffi_unregister_callback(name: *const c_char) -> i32 {
     };
     match CALLBACKS.lock() {
         Ok(mut guard) => {
-            if guard.remove(&name_str).is_some() { 0 } else { -1 }
+            if guard.remove(&name_str).is_some() {
+                0
+            } else {
+                -1
+            }
         }
         Err(_) => -2,
     }

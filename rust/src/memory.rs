@@ -49,7 +49,11 @@ impl FfiBuffer {
     /// Represents an empty / absent buffer. Safe to pass to [`ffi_buffer_free`].
     #[inline]
     pub fn null() -> Self {
-        FfiBuffer { data: ptr::null_mut(), len: 0, capacity: 0 }
+        FfiBuffer {
+            data: ptr::null_mut(),
+            len: 0,
+            capacity: 0,
+        }
     }
 
     /// Allocate a new buffer of `capacity` bytes.
@@ -70,7 +74,11 @@ impl FfiBuffer {
             // Global allocator contract: null means OOM.
             panic!("ffi_buffer_alloc: out of memory (capacity={})", capacity);
         }
-        FfiBuffer { data, len: 0, capacity }
+        FfiBuffer {
+            data,
+            len: 0,
+            capacity,
+        }
     }
 
     /// Consume a `Vec<u8>` and wrap it as an `FfiBuffer`.
@@ -174,7 +182,10 @@ impl FfiString {
     /// Returns an empty `FfiString` (null data pointer, len=0).
     #[inline]
     pub fn null() -> Self {
-        FfiString { data: ptr::null_mut(), len: 0 }
+        FfiString {
+            data: ptr::null_mut(),
+            len: 0,
+        }
     }
 
     /// Allocate and copy a UTF-8 string.
@@ -189,7 +200,10 @@ impl FfiString {
             panic!("ffi_string_alloc: out of memory");
         }
         unsafe { ptr::copy_nonoverlapping(bytes.as_ptr(), data, bytes.len()) };
-        FfiString { data, len: bytes.len() }
+        FfiString {
+            data,
+            len: bytes.len(),
+        }
     }
 
     /// Convert to a `&str`.
@@ -284,7 +298,9 @@ mod tests {
     #[test]
     fn buffer_from_json_round_trip() {
         #[derive(serde::Serialize, serde::Deserialize, PartialEq, Debug)]
-        struct Msg { value: u32 }
+        struct Msg {
+            value: u32,
+        }
 
         let msg = Msg { value: 42 };
         let buf = FfiBuffer::from_json(&msg).unwrap();

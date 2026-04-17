@@ -24,7 +24,9 @@ pub struct BridgeValue {
 impl BridgeValue {
     /// Serialize a value to JSON and wrap it.
     pub fn new<T: serde::Serialize>(value: &T) -> Result<Self, FfiError> {
-        Ok(BridgeValue { inner: FfiBuffer::from_json(value)? })
+        Ok(BridgeValue {
+            inner: FfiBuffer::from_json(value)?,
+        })
     }
 
     /// Deserialize the contained JSON into `T`.
