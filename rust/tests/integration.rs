@@ -104,6 +104,14 @@ fn ffi_echo_copies_data() {
 
 // ─── Callback registry ────────────────────────────────────────────────────────
 
+/// Generate a unique callback name using an atomic counter.
+/// Avoids timestamp collisions when tests run in parallel on CI.
+fn unique_name(prefix: &str) -> String {
+    use std::sync::atomic::{AtomicU64, Ordering};
+    static COUNTER: AtomicU64 = AtomicU64::new(0);
+    format!("{prefix}_{}", COUNTER.fetch_add(1, Ordering::Relaxed))
+}
+
 #[test]
 fn callback_register_and_invoke() {
     use std::sync::atomic::{AtomicU32, Ordering};
@@ -112,10 +120,7 @@ fn callback_register_and_invoke() {
     let call_count = Arc::new(AtomicU32::new(0));
     let counter = Arc::clone(&call_count);
 
-    let name = format!("integ_cb_{}", std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap()
-        .subsec_nanos());
+    let name = unique_name("integ_cb");
 
     register_callback(&name, move |buf| {
         counter.fetch_add(1, Ordering::SeqCst);

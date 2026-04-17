@@ -182,9 +182,9 @@ mod tests {
     use crate::errors::{ffi_result_free, FfiErrorCode};
 
     fn unique_name(prefix: &str) -> String {
-        use std::time::{SystemTime, UNIX_EPOCH};
-        let nanos = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().subsec_nanos();
-        format!("{prefix}_{nanos}")
+        use std::sync::atomic::{AtomicU64, Ordering};
+        static COUNTER: AtomicU64 = AtomicU64::new(0);
+        format!("{prefix}_{}", COUNTER.fetch_add(1, Ordering::Relaxed))
     }
 
     #[test]
