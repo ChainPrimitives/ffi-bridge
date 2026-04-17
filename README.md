@@ -8,7 +8,7 @@
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/ChainPrimitives/ffi-bridge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ChainPrimitives/ffi-bridge/pulls)
 
-A dual-language package — a **Go module** and a **Rust crate** — that provides safe abstractions for crossing the Go↔Rust FFI boundary. Extracted from a hybrid-runtime blockchain engine where correctness at the FFI layer is critical.
+A dual-language package — a **Go module** and a **Rust crate** — that provides safe abstractions for crossing the Go↔Rust FFI boundary.
 
 ---
 

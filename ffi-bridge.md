@@ -4,8 +4,6 @@
 
 A Go↔Rust FFI boundary helper library providing memory-safe data passing, error propagation, and GC-isolation patterns. Ships as both a Go module and a Rust crate with matching interfaces.
 
-**Why this package?** FFI between Go and Rust is notoriously error-prone — dangling pointers, GC interference, memory leaks. This library provides safe abstractions extracted from your hybrid-runtime-blockchain-engine project.
-
 ---
 
 ## Package Metadata
