@@ -44,7 +44,7 @@ jobs:
         run: cd rust && cargo build --release
 
       - name: Test
-        run: cd rust && cargo test -- --test-output immediate
+        run: cd rust && cargo test
 
       - name: Run example
         run: cd rust && cargo run --example basic --release
@@ -81,13 +81,13 @@ jobs:
         run: cd rust && cargo build --release
 
       - name: Go vet
-        run: cd go && CGO_ENABLED=1 go vet ./...
+        run: cd go && CGO_ENABLED=1 go vet .
 
       - name: Go test
-        run: cd go && CGO_ENABLED=1 go test -v -count=1 ./...
+        run: cd go && CGO_ENABLED=1 go test -v -count=1 .
 
       - name: Go benchmarks
-        run: cd go && CGO_ENABLED=1 go test -bench=. -benchmem -run='^$$' ./...
+        run: cd go && CGO_ENABLED=1 go test -bench=. -benchmem -run='^$' .
 
   # ─── Format check (Go) ──────────────────────────────────────────────────────
   fmt-go:

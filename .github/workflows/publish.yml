@@ -35,7 +35,7 @@ jobs:
         run: cd rust && cargo clippy -- -D warnings
 
       - name: Rust tests
-        run: cd rust && cargo test -- --test-output immediate
+        run: cd rust && cargo test
 
       - name: Set up Go
         uses: actions/setup-go@v5

@@ -54,7 +54,7 @@ test: test-rust test-go ## Run all tests
 
 test-rust: ## Run Rust unit + integration tests
 	@echo "→ Running Rust tests..."
-	cd $(RUST_DIR) && cargo test -- --test-output immediate
+	cd $(RUST_DIR) && cargo test
 	@echo "✓ Rust tests passed"
 
 test-go: rust ## Run Go tests (builds Rust first)
