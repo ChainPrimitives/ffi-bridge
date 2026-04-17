@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	ffibridge "github.com/ChainPrimitives/ffi-bridge"
+	ffibridge "github.com/ChainPrimitives/ffi-bridge/go"
 )
 
 // ─── Buffer tests ─────────────────────────────────────────────────────────────

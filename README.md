@@ -99,7 +99,7 @@ ffi-bridge = "1.0"
 ### 3. Use the Go module
 
 ```bash
-go get github.com/ChainPrimitives/ffi-bridge
+go get github.com/ChainPrimitives/ffi-bridge/go
 ```
 
 > **Note:** CGO_ENABLED=1 is required. The Rust shared library must be built
@@ -186,7 +186,7 @@ pub extern "C" fn my_fn(input: FfiBuffer) -> FfiResult {
 ### Buffer operations
 
 ```go
-import ffibridge "github.com/ChainPrimitives/ffi-bridge"
+import ffibridge "github.com/ChainPrimitives/ffi-bridge/go"
 
 // From bytes
 buf := ffibridge.FromBytes([]byte("hello rust"))

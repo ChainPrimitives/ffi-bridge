@@ -16,7 +16,7 @@ import (
 	"fmt"
 	"log"
 
-	ffibridge "github.com/ChainPrimitives/ffi-bridge"
+	ffibridge "github.com/ChainPrimitives/ffi-bridge/go"
 )
 
 type MathRequest struct {

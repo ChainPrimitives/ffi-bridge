@@ -108,6 +108,11 @@ jobs:
           git tag "go/v${{ steps.version.outputs.VERSION }}"
           git push origin "go/v${{ steps.version.outputs.VERSION }}"
 
+      - name: Trigger Go module proxy indexing
+        run: |
+          curl -sSf "https://sum.golang.org/lookup/github.com/ChainPrimitives/ffi-bridge/go@v${{ steps.version.outputs.VERSION }}" || true
+          curl -sSf "https://proxy.golang.org/github.com/ChainPrimitives/ffi-bridge/go/@v/v${{ steps.version.outputs.VERSION }}.info" || true
+
   # ─── Create GitHub Release with changelog ─────────────────────────────────
   release:
     name: GitHub Release
@@ -135,5 +140,5 @@ jobs:
 
             **Go**
             ```bash
-            go get github.com/ChainPrimitives/ffi-bridge@${{ github.ref_name }}
+            go get github.com/ChainPrimitives/ffi-bridge/go@${{ github.ref_name }}
             ```
